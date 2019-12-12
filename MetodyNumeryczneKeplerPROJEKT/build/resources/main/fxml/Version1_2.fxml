@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.ScatterChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="687.0" prefWidth="966.0" stylesheets="@../trajectories.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.KeplerController">
+   <children>
+      <MenuBar prefHeight="29.0" prefWidth="844.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Plik">
+            <items>
+              <MenuItem fx:id="menuItemSave" mnemonicParsing="false" onAction="#menuItemSavePressed" text="Zapis" />
+                  <MenuItem fx:id="menuItemClear" mnemonicParsing="false" onAction="#menuItemCleanPressed" text="Czyszczenie wykresu" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Wybór metody">
+               <items>
+                  <RadioMenuItem fx:id="radioMenuBisection" mnemonicParsing="true" text="Bisekcja">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tg" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem fx:id="radioMenuRegulaFalsi" mnemonicParsing="false" text="Regula falsi" toggleGroup="$tg" />
+                  <RadioMenuItem fx:id="radioMenuFixedPointMethod" mnemonicParsing="false" text="Metoda punktu stałego" toggleGroup="$tg" />
+                  <RadioMenuItem fx:id="radioMenuNewton" mnemonicParsing="false" text="Meotda Newtona-Raphsona" toggleGroup="$tg" />
+                  <RadioMenuItem fx:id="radioMenuMetodaSiecznych" mnemonicParsing="false" text="Metoda siecznych" toggleGroup="$tg" />
+               </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <SplitPane dividerPositions="0.5" prefHeight="130.0" prefWidth="966.0" HBox.hgrow="ALWAYS">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="404.0" SplitPane.resizableWithParent="false">
+                     <children>
+                        <Label alignment="CENTER" layoutX="11.0" layoutY="7.0" prefHeight="15.0" prefWidth="121.0" text="Odległość od Słońca [A.U.]" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="7.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="352.0" layoutY="6.0" prefHeight="17.0" prefWidth="90.0" text="Ekscentryczność" AnchorPane.leftAnchor="352.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="6.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" layoutX="138.0" layoutY="6.0" prefHeight="17.0" prefWidth="177.0" text="Długość obrotu [y - lata, d - dni]" AnchorPane.leftAnchor="138.0" AnchorPane.rightAnchor="163.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
+                        <TextField fx:id="textFieldDistance" layoutX="-4.0" layoutY="23.0" scaleX="0.8" scaleY="0.8" />
+                        <TextField fx:id="textFieldRevolution" layoutX="151.0" layoutY="23.0" scaleX="0.8" scaleY="0.8" />
+                        <TextField fx:id="textFieldEccentricity" layoutX="321.0" layoutY="23.0" scaleX="0.8" scaleY="0.8" />
+                        <TextField fx:id="textFieldSigmaA" layoutX="151.0" layoutY="69.0" scaleX="0.8" scaleY="0.8" AnchorPane.bottomAnchor="-1.0" />
+                        <Label alignment="CENTER" layoutX="137.0" layoutY="57.0" text="Wartość względnego błędu przybliżenia ">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+                     <children>
+                        <ImageView fitHeight="192.0" fitWidth="608.0" layoutX="-73.0" layoutY="-7.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-130.0">
+                           <image>
+                              <Image url="@solarSystem.jpg" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="600.0" width="1000.0" />
+                           </viewport>
+                        </ImageView>
+                        <Button fx:id="btnDrawTrajectories" alignment="CENTER" layoutX="202.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonDrawPressed" prefHeight="25.0" prefWidth="75.0" scaleShape="false" text="Rysuj" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="202.0" />
+                     </children></AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </HBox>
+      <ScatterChart fx:id="ScatterChart" prefHeight="511.0" prefWidth="966.0" title="Wykres trajektorii planet Układu Słonecznego" VBox.vgrow="ALWAYS">
+        <xAxis>
+          <NumberAxis animated="false" label="Odległość [A.U.]" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Odległość [A.U.]" side="LEFT" />
+        </yAxis>
+      </ScatterChart>
+   </children>
+</VBox>
